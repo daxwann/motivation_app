@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject(:user) { FactoryBot.create(username: 'andyruiz', password: "password") }
+  subject(:user) { FactoryBot.build(:user, password: "password") }
 
   describe 'validations' do
     it { should validate_presence_of(:username) }
@@ -15,22 +15,23 @@ RSpec.describe User, type: :model do
 
   describe 'class methods' do
     describe '::find_by_credentials' do
+      before { user.save! }
       it 'returns nil with incorrect credentials' do
-        expect(User.find_by_credentials('andyruiz', 'abc')).to eq(nil)
+        expect(User.find_by_credentials(user.username, 'abc')).to eq(nil)
       end
 
       it 'returns user with correct credentials' do
-        expect(User.find_by_credentials('andyruiz', 'starwars')).to eq(user)
+        expect(User.find_by_credentials(user.username, 'password')).to eq(user)
       end
     end
 
     describe '#is_password?' do
       it 'returns false with wrong password' do
-        expect(user.is_password?('abc').to eq(false))
+        expect(user.is_password?('abc')).to eq(false)
       end
 
       it 'returns true with right password' do
-        expect(user.is_password?('starwars').to eq(true))
+        expect(user.is_password?('password')).to eq(true)
       end
     end
 
