@@ -10,6 +10,24 @@
   </head>
 
   <body>
+    <header>
+      <% if current_user %>
+        <p><%= current_user.username %></p>
+        <form action="<%= session_url %>" method="POST">
+          <%= auth_token %>
+          <input type="hidden"
+            name="_method"
+            value="delete">
+          <input type="submit"
+            value="Logout">
+        </form>
+      <% else %>
+        <div>
+          <a href="<%= new_session_url %>">Login</a>
+          <a href="<%= new_user_url %>">Sign Up</a>
+        </div>
+      <% end %>
+    </header>
     <%= yield %>
   </body>
 </html>

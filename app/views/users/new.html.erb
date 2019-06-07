@@ -1,0 +1,25 @@
+<div>
+  <h1>New User</h1>
+  <%= render 'shared/errors' %>
+  <form action="<%= users_url %>" method="POST">
+    <%= auth_token %>
+    <div>
+      <label for="user_username">Username</label>
+      <input type="text"
+        id="user_username"
+        name="user[username]"
+        value="<%= @user.username %>">
+    </div>
+    <div>
+      <label for="user_password">Password</label>
+      <input type="password"
+        id="user_password"
+        name="user[password]"
+        value="<%= @user.password %>">
+    </div>
+    <div>
+      <input type="submit"
+        value="Create User">
+    </div>
+  </form>
+</div>
