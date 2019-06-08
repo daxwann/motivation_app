@@ -107,3 +107,17 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
+
+def sign_up_user(username, password)
+  visit new_user_url
+  fill_in 'Username', with: username
+  fill_in 'Password', with: password
+  click_button 'Create User'
+end
+
+def login_user(username, password)
+  visit new_session_url
+  fill_in 'Username', with: username
+  fill_in 'Password', with: password
+  click_button 'Sign In'
+end

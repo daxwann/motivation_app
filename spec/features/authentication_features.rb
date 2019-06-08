@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+feature 'authentication' do
 subject(:user) { FactoryBot.build(:user) }
 
 feature 'sign up process' do
@@ -14,7 +15,7 @@ feature 'sign up process' do
 
       expect(current_path).to eq("/users")
       expect(page).to have_content("Password is too short")
-      expect(page).to have_content("Email can't be blank")
+      expect(page).to have_content("Username can't be blank")
     end
 
     scenario 'creates new user with correct params' do
@@ -28,18 +29,18 @@ end
 feature 'sign in process' do
   scenario 'has sign in page' do
     visit new_session_url
-    expect(page).to have_content("Sign In")
+    expect(page).to have_content("Login")
   end
 
   feature 'signing in to new session' do
     scenario 'invalidates wrong params' do
       login_user(nil, nil)
       expect(current_path).to eq("/session")
-      expect(page).to have_content("Password is too short")
-      expect(page).to have_content("Email can't be blank")
+      expect(page).to have_content("Incorrect username or password")
     end
 
     scenario 'creates new session with correct params' do
+      user.save!
       login_user(user.username, user.password)
       expect(page).to have_content(user.username)
     end
@@ -47,7 +48,10 @@ feature 'sign in process' do
 end
 
 feature 'sign out process' do
-  before_each { login_user(user.username, user.password) }
+  before(:each) do 
+    user.save!
+    login_user(user.username, user.password) 
+  end
 
   scenario 'begins with a logged out state' do
     click_button("Logout")
@@ -58,4 +62,5 @@ feature 'sign out process' do
     click_button("Logout")
     expect(page).to_not have_content(user.username)
   end
+end
 end
