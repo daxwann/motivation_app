@@ -21,6 +21,7 @@ feature 'sign up process' do
     scenario 'creates new user with correct params' do
       sign_up_user(user.username, user.password)
 
+      expect(current_path).to eq("/users")
       expect(page).to have_content(user.username)
     end
   end
@@ -42,6 +43,7 @@ feature 'sign in process' do
     scenario 'creates new session with correct params' do
       user.save!
       login_user(user.username, user.password)
+      expect(current_path).to eq("/users")
       expect(page).to have_content(user.username)
     end
   end

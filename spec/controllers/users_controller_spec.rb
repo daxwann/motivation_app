@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  
   describe 'GET :new' do
     it 'returns :new template' do
       get :new, {}
@@ -28,6 +29,16 @@ RSpec.describe UsersController, type: :controller do
         post :create, params: { user: { username: "jwick", password: "starwars" } }
         expect(response).to redirect_to(user_url(User.find_by(username: "jwick")))
       end
+    end
+  end
+
+  describe 'GET :index' do
+    before(:each) do
+      post :create, params: { user: { username: "jwick", password: "starwars" } }
+    end
+    it 'returns :index template' do
+      get :index
+      expect(response).to render_template("index")
     end
   end
 end

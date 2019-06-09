@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
-  before_action :require_login!, only: [:show]
+  before_action :require_login!, only: [:show, :index]
   before_action :redirect_user!, only: [:create, :new]
+
+  def index
+    @users = User.all
+    render :index
+  end
 
   def new
     @user = User.new
@@ -12,7 +17,7 @@ class UsersController < ApplicationController
     
     if @user.save
       login_user!(@user)
-      redirect_to user_url(@user)
+      redirect_to users_url
     else
       flash.now[:errors] = @user.errors.full_messages
       render :new
