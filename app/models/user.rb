@@ -6,6 +6,12 @@ class User < ApplicationRecord
   validates :password_digest, presence: true
   after_initialize :ensure_session_token
 
+  has_many :goals,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :Goal,
+    dependent: :destroy
+
   def self.generate_unique_session_token
     token = SecureRandom.urlsafe_base64(16)
 
