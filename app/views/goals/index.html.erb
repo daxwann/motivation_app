@@ -1,0 +1,10 @@
+<div>
+  <h1>Goals</h1>
+  <% unless @goals.empty? %>
+    <ul>
+      <% @goals.each do |goal| %>
+        <li><a href="<%= goal_url(goal) %>"><%= goal.title %></a></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

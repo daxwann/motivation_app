@@ -1,0 +1,62 @@
+<% goal_exist = goal.persisted? %>
+
+<form action="<%= goal_exist ? goal_url(goal) : goals_url %>" method="POST">
+  <%= auth_token %>
+  <% if goal_exist %>
+    <input type="hidden"
+      name="_method"
+      value="patch">
+  <% end %>
+  <div>
+    <label for="goal_title">Title</label>
+    <input type="text"
+      id="goal_title"
+      name="goal[title]"
+      value="<%= goal.title %>">
+  </div>
+  <div>
+    <label for="goal_detail">Detail</label>
+    <textarea id="goal_detail"
+      name="goal[detail]"><%= goal.detail %></textarea>
+  </div>
+  <div>
+    <p>Share goal with public?</p>
+    <label>
+      <input type="radio"
+        name="goal[public]"
+        value="true"
+        <%= "checked" if goal.public == true %>>
+      Yes
+    </label>
+   <label>
+    <input type="radio"
+        name="goal[public]"
+        value="false"
+        <%= "checked" if goal.public == false %>>
+      No
+    </label>
+  </div>
+  <% if goal_exist %>
+    <div>
+      <p>Have you completed this goal?</p>
+      <label>
+        <input type="radio"
+          name="goal[completed]"
+          value="true"
+          <%= "checked" if goal.completed == true %>>
+        Yes
+      </label>
+      <label>
+      <input type="radio"
+        name="goal[completed]"
+        value="false"
+        <%= "checked" if goal.completed == false %>>
+      No
+      </label>
+    </div>
+  <% end %>
+  <div>
+    <input type="submit"
+      value="<%= goal_exist ? "Change" : "Create" %>">
+  </div>
+</form>

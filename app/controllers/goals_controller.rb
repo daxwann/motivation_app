@@ -1,4 +1,11 @@
 class GoalsController < ApplicationController
+  before_action :require_login!
+
+  def index
+    @goals = current_user.goals
+    render :index
+  end
+
   def new
     @goal = Goal.new
     render :new

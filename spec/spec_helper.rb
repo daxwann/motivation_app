@@ -108,6 +108,8 @@ RSpec.configure do |config|
   end
 end
 
+
+# features helpers
 def sign_up_user(username, password)
   visit new_user_url
   fill_in 'Username', with: username

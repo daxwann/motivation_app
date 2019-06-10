@@ -1,0 +1,6 @@
+<div>
+  <h1>Goal: <%= @goal.title %></h1>
+  <p>Author: <a href="<%= user_url(@goal.user_id) %>"><%= @goal.author.username %></a></p>
+  <p>Detail:</p>
+  <pre><%= @goal.detail %></pre>
+</div>
