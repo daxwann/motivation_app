@@ -3,4 +3,24 @@
   <p>Author: <a href="<%= user_url(@goal.user_id) %>"><%= @goal.author.username %></a></p>
   <p>Detail:</p>
   <pre><%= @goal.detail %></pre>
+  <% if @goal.completed %>
+    <p>Completed</p>
+  <% else %>
+    <p>Not Completed</p>
+  <% end %>
+  <% if @goal.user_id == current_user.id %>
+    <div>
+      <a href="<%= edit_goal_url(@goal) %>">Edit</a>
+    </div>
+    <div>
+      <form action="<%= goal_url(@goal) %>" method="POST">
+        <%= auth_token %>
+        <input type="hidden"
+          name="_method"
+          value="delete">
+        <input type="submit"
+          value="Delete">
+      </form>
+    </div>
+  <% end %>
 </div>

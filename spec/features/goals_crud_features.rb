@@ -14,11 +14,11 @@ feature 'goals CRUD' do
     end
 
     scenario 'includes all goals by user' do
-      let(:goal1) { FactoryBot.create(:goal, user_id: user.id) }
-      let(:goal2) { FactoryBot.create(:goal, user_id: user.id) }
+      goal_1 = FactoryBot.create(:goal, user_id: user.id)
+      goal_2 = FactoryBot.create(:goal, user_id: user.id)
       visit goals_url
-      expect(page).to have_content goal1.title
-      expect(page).to have_content goal2.title
+      expect(page).to have_content goal_1.title
+      expect(page).to have_content goal_2.title
     end
   end
 
@@ -45,7 +45,7 @@ feature 'goals CRUD' do
       fill_in "Detail", with: "learn ruby, sql, rails, javascript"
       choose('goal[public]', option: 'false')
       click_button('Create')
-      expect(current_path).to eq(/goals\/[0-9]+/)
+      expect(page).to have_current_path(/goals\/[0-9]+/)
       expect(page).to have_content "finish appacademy"
       expect(page).to have_content "learn ruby, sql, rails, javascript"
       expect(page).to have_content "Not Completed"
@@ -92,16 +92,17 @@ feature 'goals CRUD' do
     end
 
     scenario 'has a show goal page' do
-      visit goal_url(@goal1)
+      visit goal_url(@goal1.id)
       expect(page).to have_content @goal1.title
       expect(page).to have_content @goal1.detail
       expect(page).to have_content "Not Completed"
     end
 
     scenario 'deletes goal' do
-    end
-
-    scenario 'doesn\'t show goal in list' do
+      visit goal_url(@goal1.id)
+      click_button("Delete")
+      expect(current_path).to eq("/goals")
+      expect(page).to_not have_content @goal1.title
     end
   end
 end
