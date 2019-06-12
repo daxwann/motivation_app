@@ -26,8 +26,9 @@ class UsersController < ApplicationController
 
   def show
     @comment = UserComment.new
+    @user = User.find_by(id: params[:id])
 
-    if current_user.id == params[:id].to_i
+    if @user
       render :show
     else
       redirect_to user_url(current_user)
