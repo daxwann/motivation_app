@@ -12,6 +12,12 @@ class User < ApplicationRecord
     class_name: :Goal,
     dependent: :destroy
 
+  has_many :comments,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :UserComment,
+    dependent: :destroy
+
   def self.generate_unique_session_token
     token = SecureRandom.urlsafe_base64(16)
 

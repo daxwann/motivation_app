@@ -72,6 +72,7 @@ feature 'goals CRUD' do
       expect(page).to have_content "Detail can't be blank"
     end
 
+    # test completion feature
     scenario 'updates goal with correct params' do
       visit edit_goal_url(@goal1.id)
       fill_in "Title", with: "finish appacademy"
