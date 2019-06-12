@@ -25,6 +25,7 @@ class GoalsController < ApplicationController
 
   def show
     @goal = Goal.find_by(id: params[:id])
+    @comment = GoalComment.new
 
     if @goal && (@goal.public == true || current_user.id == @goal.user_id) 
       render :show

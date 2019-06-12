@@ -25,6 +25,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @comment = UserComment.new
+
     if current_user.id == params[:id].to_i
       render :show
     else
