@@ -3,6 +3,5 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :index, :create, :show]
   resources :goals
   resource :session, only: [:new, :create, :destroy]
-  resources :goal_comments, only: [:create, :destroy]
-  resources :user_comments, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
 end

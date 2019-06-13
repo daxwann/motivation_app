@@ -25,7 +25,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @comment = UserComment.new
     @user = User.find_by(id: params[:id])
 
     if @user

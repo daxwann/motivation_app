@@ -1,41 +1,5 @@
 <div>
   <h1><%= @user.username %></h1>
 </div>
-<div>
-  <h2>Comments</h2>
-  <% unless @user.comments.empty? %>
-    <% @user.comments.each do |comment| %>
-      <pre><%= comment.body %></pre>
-      <p>- <%= comment.author.username %></p>
-      <% if comment.author_id == current_user.id %>
-        <div>
-          <form action="<%= user_comment_url(comment.id) %>" method="POST">
-            <%= auth_token %>
-            <input type="hidden"
-              name="_method"
-              value="delete">
-            <input type="submit"
-              value="Delete Comment">
-          </form>
-        </div>
-      <% end %>
-    <% end %>
-  <% else %>
-    <p>None</p>
-  <% end %>
-  <div>
-    <form action="<%= user_comments_url %>" method="POST">
-      <%= auth_token %>
-      <input type="hidden"
-        name="user_comment[user_id]"
-        value="<%= @user.id %>">
-      <div>
-        <label for="user_comment_body">New Comment</label>
-        <textarea id="user_comment_body"
-          name="user_comment[body]"><%= @comment.body %></textarea>
-      </div>
-      <input type="submit"
-        value="Add Comment">
-    </form>
-  </div>
-</div>
+<%= render 'shared/comments', subject: @user %>
+

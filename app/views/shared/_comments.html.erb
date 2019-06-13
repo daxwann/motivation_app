@@ -1,0 +1,45 @@
+<div>
+  <h2>Comments</h2>
+  <%= render 'shared/errors' %>
+  <%= render 'shared/notices' %>
+
+  <% unless subject.comments.empty? %>
+    <% subject.comments.each do |comment| %>
+      <pre><%= comment.body %></pre>
+      <p>- <%= comment.author.username %></p>
+      <% if comment.author_id == current_user.id %>
+        <div>
+          <form action="<%= comment_url(comment.id) %>" method="POST">
+            <%= auth_token %>
+            <input type="hidden"
+              name="_method"
+              value="delete">
+            <input type="submit"
+              value="Delete Comment">
+          </form>
+        </div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>None</p>
+  <% end %>
+  <div>
+    <form action="<%= comments_url %>" method="POST">
+      <%= auth_token %>
+      <input type="hidden"
+        name="comment[commentable_type]"
+        value="<%= subject.class.name %>">
+      <input type="hidden"
+        name="comment[commentable_id]"
+        value="<%= subject.id %>">
+      <div>
+        <label for="comment_body">New Comment</label>
+        <textarea id="comment_body"
+          name="comment[body]"></textarea>
+      </div>
+      <input type="submit"
+        value="Add Comment">
+    </form>
+  </div>
+</div>
+

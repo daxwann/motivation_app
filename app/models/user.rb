@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Commentable
+
   attr_reader :password
 
   validates :username, :session_token, presence: true, uniqueness: true  
@@ -12,10 +14,10 @@ class User < ApplicationRecord
     class_name: :Goal,
     dependent: :destroy
 
-  has_many :comments,
+  has_many :written_comments,
     primary_key: :id,
-    foreign_key: :user_id,
-    class_name: :UserComment,
+    foreign_key: :author_id,
+    class_name: :Comment,
     dependent: :destroy
 
   def self.generate_unique_session_token

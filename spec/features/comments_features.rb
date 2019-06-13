@@ -14,8 +14,10 @@ feature 'comments' do
       visit goal_url(goal)
       fill_in "New Comment", with: "This is the comment's body"
       click_button("Add Comment")
+      expect(page).to have_content("Comment added!")
       expect(page).to have_content("This is the comment's body")
       click_button("Delete Comment")
+      expect(page).to have_content("Comment deleted!")
       expect(page).to_not have_content("This is the comment's body")
     end
   end
@@ -27,8 +29,10 @@ feature 'comments' do
       visit user_url(user2)
       fill_in "New Comment", with: "This is the comment's body"
       click_button("Add Comment")
+      expect(page).to have_content("Comment added!")
       expect(page).to have_content("This is the comment's body")
       click_button("Delete Comment")
+      expect(page).to have_content("Comment deleted!")
       expect(page).to_not have_content("This is the comment's body")
     end
   end
